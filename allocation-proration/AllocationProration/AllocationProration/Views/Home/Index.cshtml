@@ -16,37 +16,40 @@
 
     <div class="row mt-2">
         <div class="col-md-7 card">
-            <form>
-                <div class="mb-3">
-                    <label class="form-label mt-1">Total Available Allocation</label>
-                    <input type="text" class="form-control" aria-describedby="totalAvailableAllocation">
-                </div>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+            <div class="mb-3">
+                <label class="form-label mt-1">Total Available Allocation</label>
+                @Html.TextBoxFor(m => Model.TotalAvailableAllocation, new { placeholder = "TotalAvailableAllocation", @class = "form-control mt-1" })
+            </div>
 
                 <label class="form-label">Investor Breakdown</label>
                 <div class="row">
                     <div class="col-md-4">
-                        @foreach (var investorInfo in Model.InvestorInfos)
+                        
+                        @for (var i=0; i<Model.InvestorInfos.Count; i++ )
                         {
-                            <input type="text" class="form-control mt-1" placeholder="Name" aria-describedby="name">
+                            @Html.TextBoxFor(m => Model.InvestorInfos[i].Name, new { placeholder = "Name", @class = "form-control mt-1" })
                         }
                     </div>
                     <div class="col-md-4">
-                        @foreach (var investorInfo in Model.InvestorInfos)
+                        @for (var i = 0; i < Model.InvestorInfos.Count; i++)
                         {
-                            <input type="text" class="form-control mt-1" placeholder="Requested Amount" aria-describedby="requestedAmount">
+                            @Html.TextBoxFor(m => Model.InvestorInfos[i].RequestAmount, new { placeholder = "Requested Amount", @class = "form-control mt-1" })
                         }
                     </div>
                     <div class="col-md-4">
-                        @foreach (var investorInfo in Model.InvestorInfos)
+
+                        @for (var i = 0; i < Model.InvestorInfos.Count; i++)
                         {
-                            <input type="text" class="form-control mt-1" placeholder="Average Amount" aria-describedby="averageAmount">
+                            @Html.TextBoxFor(m => Model.InvestorInfos[i].AveragAmount, new { placeholder = "Average Amount", @class = "form-control mt-1" })
                         }
                     </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary my-2">Prorate</button>
-            </form>
-        </div>
+            }
+            </div>
 
         <div class="col-md-4 offset-1 card">
             <div>

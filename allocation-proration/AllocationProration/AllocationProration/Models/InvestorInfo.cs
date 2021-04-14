@@ -8,7 +8,7 @@ namespace AllocationProration.Models
     public class InvestorInfo
     {
         public string Name { get; set; }
-        public decimal RequestAmount { get; set; }
-        public decimal AveragAmount { get; set; }
+        public decimal? RequestAmount { get; set; }
+        public decimal? AveragAmount { get; set; }
     }
 }
