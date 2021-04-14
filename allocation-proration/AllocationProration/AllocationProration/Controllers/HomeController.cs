@@ -20,7 +20,11 @@ namespace AllocationProration.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new List<InvestorInfo>();
+
+            InvestorInfo investorInfo = new InvestorInfo();
+            model.Add(investorInfo);
+            return View(model);
         }
 
         public IActionResult Privacy()

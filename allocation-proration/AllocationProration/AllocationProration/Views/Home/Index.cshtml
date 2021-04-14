@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    @model List<InvestorInfo>;
 }
 
 <div class="container">
@@ -24,19 +25,22 @@
                 <label class="form-label">Investor Breakdown</label>
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" class="form-control mt-1" placeholder="Name" aria-describedby="name">
-                        <input type="text" class="form-control mt-1" placeholder="Name" aria-describedby="name">
-                        <input type="text" class="form-control mt-1" placeholder="Name" aria-describedby="name">
+                        @foreach (var investorInfo in Model)
+                        {
+                            <input type="text" class="form-control mt-1" placeholder="Name" aria-describedby="name">
+                        }
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control mt-1" placeholder="Requested Amount" aria-describedby="requestedAmount">
-                        <input type="text" class="form-control mt-1" placeholder="Requested Amount" aria-describedby="requestedAmount">
-                        <input type="text" class="form-control mt-1" placeholder="Requested Amount" aria-describedby="requestedAmount">
+                        @foreach (var investorInfo in Model)
+                        {
+                            <input type="text" class="form-control mt-1" placeholder="Requested Amount" aria-describedby="requestedAmount">
+                        }
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control mt-1" placeholder="Average Amount" aria-describedby="averageAmount">
-                        <input type="text" class="form-control mt-1" placeholder="Average Amount" aria-describedby="averageAmount">
-                        <input type="text" class="form-control mt-1" placeholder="Average Amount" aria-describedby="averageAmount">
+                        @foreach (var investorInfo in Model)
+                        {
+                            <input type="text" class="form-control mt-1" placeholder="Average Amount" aria-describedby="averageAmount">
+                        }
                     </div>
                 </div>
 
