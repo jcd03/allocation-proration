@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    @model List<InvestorInfo>;
+    @model AllocationViewModel;
 }
 
 <div class="container">
@@ -25,19 +25,19 @@
                 <label class="form-label">Investor Breakdown</label>
                 <div class="row">
                     <div class="col-md-4">
-                        @foreach (var investorInfo in Model)
+                        @foreach (var investorInfo in Model.InvestorInfos)
                         {
                             <input type="text" class="form-control mt-1" placeholder="Name" aria-describedby="name">
                         }
                     </div>
                     <div class="col-md-4">
-                        @foreach (var investorInfo in Model)
+                        @foreach (var investorInfo in Model.InvestorInfos)
                         {
                             <input type="text" class="form-control mt-1" placeholder="Requested Amount" aria-describedby="requestedAmount">
                         }
                     </div>
                     <div class="col-md-4">
-                        @foreach (var investorInfo in Model)
+                        @foreach (var investorInfo in Model.InvestorInfos)
                         {
                             <input type="text" class="form-control mt-1" placeholder="Average Amount" aria-describedby="averageAmount">
                         }

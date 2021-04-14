@@ -20,10 +20,11 @@ namespace AllocationProration.Controllers
 
         public IActionResult Index()
         {
-            var model = new List<InvestorInfo>();
+            var model = new AllocationViewModel();
+            model.InvestorInfos.Add(new InvestorInfo());
+            model.InvestorInfos.Add(new InvestorInfo());
+            model.InvestorInfos.Add(new InvestorInfo());
 
-            InvestorInfo investorInfo = new InvestorInfo();
-            model.Add(investorInfo);
             return View(model);
         }
 
