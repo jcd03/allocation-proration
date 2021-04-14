@@ -31,6 +31,8 @@ namespace AllocationProration.Controllers
         [HttpPost]
         public IActionResult Index(AllocationViewModel model)
         {
+            validateFormData(model);
+
             return View(model);
         }
 
@@ -38,6 +40,27 @@ namespace AllocationProration.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private bool validateFormData(AllocationViewModel model)
+        {
+            if(model.TotalAvailableAllocation == 0)
+            {
+                ModelState.AddModelError("error", "Total Available Allocation Required. Must be decimal value");
+                return false;
+            }
+
+            foreach(var investorInfo in model.InvestorInfos)
+            {
+                if((investorInfo.RequestAmount == null && investorInfo.AveragAmount != null) || (investorInfo.RequestAmount != null && investorInfo.AveragAmount == null)) 
+                {
+                    ModelState.AddModelError("error", "One of the input values is either missing or is not a decimal value");
+                    return false;
+                }
+            }
+            if (ModelState.ContainsKey("error"))
+                ModelState["error"].Errors.Clear();
+            return true;
         }
     }
 }
