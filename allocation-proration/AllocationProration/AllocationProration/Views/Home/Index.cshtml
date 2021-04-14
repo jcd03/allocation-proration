@@ -2,7 +2,49 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Inputs</h4>
+        </div>
+        <div class="col-md-4">
+            <h4>Results</h4>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-md-7 card">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Total Available Allocation</label>
+                    <input type="text" class="form-control" aria-describedby="totalAvailableAllocation">
+                </div>
+
+                <h4>Investor Breakdown</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Name" aria-describedby="name">
+                        <input type="text" class="form-control" placeholder="Name" aria-describedby="name">
+                        <input type="text" class="form-control" placeholder="Name" aria-describedby="name">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Requested Amount" aria-describedby="requestedAmount">
+                        <input type="text" class="form-control" placeholder="Requested Amount" aria-describedby="requestedAmount">
+                        <input type="text" class="form-control" placeholder="Requested Amount" aria-describedby="requestedAmount">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Average Amount" aria-describedby="averageAmount">
+                        <input type="text" class="form-control" placeholder="Average Amount" aria-describedby="averageAmount">
+                        <input type="text" class="form-control" placeholder="Average Amount" aria-describedby="averageAmount">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4 offset-1 card">
+            <div>
+            </div>
+        </div>
+    </div>
 </div>
