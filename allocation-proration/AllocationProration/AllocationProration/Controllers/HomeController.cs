@@ -36,7 +36,7 @@ namespace AllocationProration.Controllers
                 return View(model);
 
             ProrationService prorationService = new ProrationService();
-            prorationService.Prorate(model);
+            List<InvestmentProrationResult> resultList = prorationService.Prorate(model);
 
             return View(model);
         }
