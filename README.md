@@ -11,7 +11,8 @@
 ## Running the application.
 The root of the project contains a launch.bat file. Double click or run via command line. It will
 open your browser to 'https://localhost:2000'. It will also build and launch the application.
-* If port 2000 in unavailable, open up the launch.bat and change the port number.
+* If port 2000 in unavailable, open the launch.bat and change the port number.
+* If the browser complains about the https certificate, open the launch.bat file and change the protocol to http.
 
 ### Overview of the application.
 The application is a MVC Web project built in .NET 5.0. The front end uses Razor syntax to display the page and it is styled with bootstrap. The backend algorithm is written in C#. The overall application is in the standard MVC folder structure with the business logic separated into the 'Services' folder.
