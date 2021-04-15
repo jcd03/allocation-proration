@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     @model AllocationViewModel;
+    @using AllocationProration.Models;
 }
 
 <div class="container">
@@ -54,6 +55,11 @@
         <div class="col-md-4 offset-1 card">
             <div>
                 @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+                @foreach(var result in ViewData["results"] as List<InvestmentProrationResult>)
+                {
+                    <label>@result.Name</label> <span> - @result.Amount</span> <br />
+                }
             </div>
         </div>
     </div>

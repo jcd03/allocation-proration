@@ -26,6 +26,8 @@ namespace AllocationProration.Controllers
             model.InvestorInfos.Add(new InvestorInfo());
             model.InvestorInfos.Add(new InvestorInfo());
 
+            ViewData["results"] = new List<InvestmentProrationResult>();
+
             return View(model);
         }
 
@@ -36,7 +38,8 @@ namespace AllocationProration.Controllers
                 return View(model);
 
             ProrationService prorationService = new ProrationService();
-            List<InvestmentProrationResult> resultList = prorationService.Prorate(model);
+            List<InvestmentProrationResult> results = prorationService.Prorate(model);
+            ViewData["results"] = results;
 
             return View(model);
         }
