@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    @model AllocationViewModel;
+    @using AllocationProration.Models;
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Inputs</h4>
+        </div>
+        <div class="col-md-4">
+            <h4>Results</h4>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-7 card">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+            <div class="mb-3">
+                <label class="form-label mt-1">Total Available Allocation</label>
+                @Html.TextBoxFor(m => Model.TotalAvailableAllocation, new { placeholder = "TotalAvailableAllocation", @class = "form-control mt-1" })
+            </div>
+
+                <label class="form-label">Investor Breakdown</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        
+                        @for (var i=0; i<Model.InvestorInfos.Count; i++ )
+                        {
+                            @Html.TextBoxFor(m => Model.InvestorInfos[i].Name, new { placeholder = "Name", @class = "form-control mt-1" })
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        @for (var i = 0; i < Model.InvestorInfos.Count; i++)
+                        {
+                            @Html.TextBoxFor(m => Model.InvestorInfos[i].RequestAmount, new { placeholder = "Requested Amount", @class = "form-control mt-1" })
+                        }
+                    </div>
+                    <div class="col-md-4">
+
+                        @for (var i = 0; i < Model.InvestorInfos.Count; i++)
+                        {
+                            @Html.TextBoxFor(m => Model.InvestorInfos[i].AveragAmount, new { placeholder = "Average Amount", @class = "form-control mt-1" })
+                        }
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary my-2">Prorate</button>
+            }
+            </div>
+
+        <div class="col-md-4 offset-1 card">
+            <div>
+                @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+                @foreach(var result in ViewData["results"] as List<InvestorInfo>)
+                {
+                    <label>@result.Name</label> <span> - @result.ProratedAmount</span> <br />
+                }
+            </div>
+        </div>
+    </div>
+</div>
