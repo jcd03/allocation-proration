@@ -35,8 +35,13 @@ namespace AllocationProration.Controllers
         public IActionResult Index(AllocationViewModel model)
         {
             if (!validateFormData(model))
+            {
+                ViewData["results"] = new List<InvestorInfo>();
                 return View(model);
+            }
 
+            // Copies the 'model' into a new alocation model. This is so the view can display the original info since the 
+            // proration service modifies the 'model' data.
             AllocationViewModel dataModel = new AllocationViewModel()
             {
                 InvestorInfos = model.InvestorInfos.Where(x => x.AveragAmount != null && x.RequestAmount != null).ToList(),
@@ -56,6 +61,14 @@ namespace AllocationProration.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        /// <summary>
+        /// Checks the form data to make sure the user inputs enough data to do the calculation.
+        /// 
+        /// This will make sure there is a Total Available Allocation number set as well as the RequestAmount
+        /// and Average Amount.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         private bool validateFormData(AllocationViewModel model)
         {
             if(model.TotalAvailableAllocation == 0)
