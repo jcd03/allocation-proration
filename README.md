@@ -23,10 +23,10 @@ The application is a MVC Web project built in .NET 5.0. The front end uses Razor
  MVC Razor was chosen since this is a simple one page application. If this were a complex application I may have chosen a SPA like Angular.
  
 2. Back-End:  
-	The logic for the algorithm is separated into the ProrationService.cs class. This keeps the business logic separate from the responsibility of the controller. It iterates through the list to calculate the proration amount. Then does a check if the prorated amount is larger than the requested amount. If that item exists, it is moved to a temporary list and the totals are re-calculated.
+	The logic for the algorithm is separated into the ProrationService.cs class. This keeps the business logic separate from the responsibility of the controller. It iterates through the list to calculate the proration amount. Then, the algorithm checks if the prorated amount is larger than the requested amount. If that item exists, it is moved to a temporary list and the totals are re-calculated.
 	
 3. ProrationServices using Dependency Injection:   
-	Initially the ProrationService class was instantiated on the HomeController when needed. I moved it into the startup class to use Dependency Injection. For an application this small it wasn't necessary, but if this were a production application with future expansion I would use this design pattern too keep the classes loosely coupled and allow for expansion.
+	Initially the ProrationService class was instantiated on the HomeController when needed. I moved it into the startup class to use Dependency Injection. For an application this small it wasn't necessary, but if this were a production application with future expansion I would use this design pattern to keep the classes loosely coupled and allow for expansion.
 	
 4. decimal? property:  
 	The nullable decimal allowed for the UI to show the 'placeholder' attribute for `<input/>`.
