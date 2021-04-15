@@ -26,7 +26,7 @@ namespace AllocationProration.Controllers
             model.InvestorInfos.Add(new InvestorInfo());
             model.InvestorInfos.Add(new InvestorInfo());
 
-            ViewData["results"] = new List<InvestmentProrationResult>();
+            ViewData["results"] = new List<InvestorInfo>();
 
             return View(model);
         }
@@ -37,8 +37,14 @@ namespace AllocationProration.Controllers
             if (!validateFormData(model))
                 return View(model);
 
+            AllocationViewModel dataModel = new AllocationViewModel()
+            {
+                InvestorInfos = model.InvestorInfos.Where(x => x.AveragAmount != null && x.RequestAmount != null).ToList(),
+                TotalAvailableAllocation = model.TotalAvailableAllocation
+            };
+            
             ProrationService prorationService = new ProrationService();
-            List<InvestmentProrationResult> results = prorationService.Prorate(model);
+            List<InvestorInfo> results = prorationService.Prorate(dataModel);
             ViewData["results"] = results;
 
             return View(model);

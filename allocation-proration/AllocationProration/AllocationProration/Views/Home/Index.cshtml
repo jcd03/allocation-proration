@@ -56,9 +56,9 @@
             <div>
                 @Html.ValidationMessage("error", new { @class = "text-danger" })
 
-                @foreach(var result in ViewData["results"] as List<InvestmentProrationResult>)
+                @foreach(var result in ViewData["results"] as List<InvestorInfo>)
                 {
-                    <label>@result.Name</label> <span> - @result.Amount</span> <br />
+                    <label>@result.Name</label> <span> - @result.ProratedAmount</span> <br />
                 }
             </div>
         </div>

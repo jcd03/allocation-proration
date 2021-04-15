@@ -12,50 +12,57 @@ namespace AllocationProration.Services
         {
         }
 
-        public List<InvestmentProrationResult> Prorate(AllocationViewModel model)
+        public List<InvestorInfo> Prorate(AllocationViewModel model)
         {
-            // Situations to check.
             // If there is enough allocated money for all investers then return.
             decimal? totalRequestedAmount = model.InvestorInfos.Sum(x => x.RequestAmount);
 
             if (totalRequestedAmount <= model.TotalAvailableAllocation)
             {
-                return model.InvestorInfos.Select(x=> new InvestmentProrationResult
+                return model.InvestorInfos.Select(x => new InvestorInfo
                 {
-                    Amount = x.RequestAmount,
+                    ProratedAmount = x.RequestAmount,
                     Name = x.Name
                 }).ToList();
             }
 
-            List<InvestmentProrationResult> resultList = new List<InvestmentProrationResult>();
+            List<InvestorInfo> resultList = new List<InvestorInfo>();
 
-            // If a user requests less than what they have invested then they should get that total amount.
-            List<InvestorInfo> investorsThatRequestLessThanAverage = model.InvestorInfos.Where(x => x.RequestAmount <= x.AveragAmount).ToList();
-            foreach(var investor in investorsThatRequestLessThanAverage)
+            bool isDone = false;
+
+            while (!isDone)
             {
-                resultList.Add(new InvestmentProrationResult()
-                {
-                    Amount = investor.RequestAmount,
-                    Name = investor.Name
-                });
+                // Final amount should not be greater than what was requested
+                decimal? averageInvestmentSum = model.InvestorInfos.Sum(x => x.AveragAmount);
 
-                model.TotalAvailableAllocation = (decimal)(model.TotalAvailableAllocation - investor.RequestAmount);
-                model.InvestorInfos.Remove(investor);
+                foreach (var investor in model.InvestorInfos)
+                {
+                    investor.ProratedAmount = (model.TotalAvailableAllocation * (investor.AveragAmount) / (averageInvestmentSum));
+                }
+
+                isDone = calculateProration(model, resultList);
             }
 
-            // Final amount should not be greater than what was requested
-            decimal? averageInvestmentSum = model.InvestorInfos.Sum(x => x.AveragAmount);
-
-            foreach(var investor in model.InvestorInfos)
-            {
-                resultList.Add(new InvestmentProrationResult()
-                {
-                    Amount = (model.TotalAvailableAllocation * (investor.AveragAmount) / (averageInvestmentSum)),
-                    Name = investor.Name
-                });
-            }
+            resultList = resultList.Concat(model.InvestorInfos).ToList();
 
             return resultList;
+        }
+
+        private bool calculateProration(AllocationViewModel model, List<InvestorInfo> infoList)
+        {
+            foreach(InvestorInfo investorInfo in model.InvestorInfos)
+            {
+                if(investorInfo.ProratedAmount > investorInfo.RequestAmount)
+                {
+                    investorInfo.ProratedAmount = investorInfo.RequestAmount;
+                    model.TotalAvailableAllocation = (decimal)(model.TotalAvailableAllocation - investorInfo.RequestAmount);
+                    infoList.Add(investorInfo);
+                    model.InvestorInfos.Remove(investorInfo);
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

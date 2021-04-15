@@ -10,5 +10,6 @@ namespace AllocationProration.Models
         public string Name { get; set; }
         public decimal? RequestAmount { get; set; }
         public decimal? AveragAmount { get; set; }
+        public decimal? ProratedAmount { get; set; }
     }
 }
