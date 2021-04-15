@@ -6,7 +6,7 @@ using AllocationProration.Models;
 
 namespace AllocationProration.Services
 {
-    public class ProrationService
+    public class ProrationService : IProrationService
     {
         public ProrationService()
         {
@@ -23,9 +23,7 @@ namespace AllocationProration.Services
         public List<InvestorInfo> Prorate(AllocationViewModel model)
         {
             // If there is enough allocated money for all investers then return.
-            decimal? totalRequestedAmount = model.InvestorInfos.Sum(x => x.RequestAmount);
-
-            if (totalRequestedAmount <= model.TotalAvailableAllocation)
+            if (model.InvestorInfos.Sum(x => x.RequestAmount) <= model.TotalAvailableAllocation)
             {
                 return model.InvestorInfos.Select(x => new InvestorInfo
                 {
@@ -35,7 +33,6 @@ namespace AllocationProration.Services
             }
 
             List<InvestorInfo> resultList = new List<InvestorInfo>();
-
             bool isDone = false;
 
             while (!isDone)
@@ -51,9 +48,7 @@ namespace AllocationProration.Services
                 isDone = calculateProration(model, resultList);
             }
 
-            resultList = resultList.Concat(model.InvestorInfos).ToList();
-
-            return resultList;
+            return resultList.Concat(model.InvestorInfos).ToList();
         }
 
         /// <summary>

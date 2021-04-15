@@ -13,10 +13,12 @@ namespace AllocationProration.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProrationService _prorationService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProrationService prorationService)
         {
             _logger = logger;
+            _prorationService = prorationService;
         }
 
         public IActionResult Index()
@@ -48,9 +50,7 @@ namespace AllocationProration.Controllers
                 TotalAvailableAllocation = model.TotalAvailableAllocation
             };
             
-            ProrationService prorationService = new ProrationService();
-            List<InvestorInfo> results = prorationService.Prorate(dataModel);
-            ViewData["results"] = results;
+            ViewData["results"] = _prorationService.Prorate(dataModel);
 
             return View(model);
         }
