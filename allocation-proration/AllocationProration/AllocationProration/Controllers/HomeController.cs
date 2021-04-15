@@ -1,4 +1,5 @@
 ﻿using AllocationProration.Models;
+using AllocationProration.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,7 +32,11 @@ namespace AllocationProration.Controllers
         [HttpPost]
         public IActionResult Index(AllocationViewModel model)
         {
-            validateFormData(model);
+            if (!validateFormData(model))
+                return View(model);
+
+            ProrationService prorationService = new ProrationService();
+            prorationService.Prorate(model);
 
             return View(model);
         }
