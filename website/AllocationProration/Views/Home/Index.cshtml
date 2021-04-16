@@ -17,40 +17,24 @@
 
     <div class="row mt-2">
         <div class="col-md-7 card">
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-            {
+            
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { name = "form", id = "form" }))
+        {            
             <div class="mb-3">
                 <label class="form-label mt-1">Total Available Allocation</label>
                 @Html.TextBoxFor(m => Model.TotalAvailableAllocation, new { placeholder = "TotalAvailableAllocation", @class = "form-control mt-1" })
             </div>
-
+            <div>
                 <label class="form-label">Investor Breakdown</label>
-                <div class="row">
-                    <div class="col-md-4">
-                        
-                        @for (var i=0; i<Model.InvestorInfos.Count; i++ )
-                        {
-                            @Html.TextBoxFor(m => Model.InvestorInfos[i].Name, new { placeholder = "Name", @class = "form-control mt-1" })
-                        }
-                    </div>
-                    <div class="col-md-4">
-                        @for (var i = 0; i < Model.InvestorInfos.Count; i++)
-                        {
-                            @Html.TextBoxFor(m => Model.InvestorInfos[i].RequestAmount, new { placeholder = "Requested Amount", @class = "form-control mt-1" })
-                        }
-                    </div>
-                    <div class="col-md-4">
-
-                        @for (var i = 0; i < Model.InvestorInfos.Count; i++)
-                        {
-                            @Html.TextBoxFor(m => Model.InvestorInfos[i].AveragAmount, new { placeholder = "Average Amount", @class = "form-control mt-1" })
-                        }
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary my-2">Prorate</button>
-            }
+                <input type="button" class="btn-dark float-right" id="btnAdd" value="Add Investor">
             </div>
+            <div id="investorInfoContainer">
+                @Html.EditorFor(model => model.InvestorInfos)
+            </div>
+
+            <input type="submit" class="btn btn-primary my-2" value="Prorate">
+        }
+        </div>
 
         <div class="col-md-4 offset-1 card">
             <div>
@@ -58,9 +42,26 @@
 
                 @foreach(var result in ViewData["results"] as List<InvestorInfo>)
                 {
-                    <label>@result.Name</label> <span> - @result.ProratedAmount</span> <br />
+                    <label>@result.Name</label> <span>: @result.ProratedAmount</span> <br />
                 }
             </div>
         </div>
     </div>
 </div>
+@section Scripts{ 
+    <script type="text/javascript">
+        
+        $("#btnAdd").on('click', function () {
+            $.ajax({
+                async: true,
+                data: $('#form').serialize(),
+                type: "POST",
+                url: '/Home/AddInvestorInfoItem',
+                success: function (partialView) {
+                    console.log("partialview: " + partialView);
+                    $('#investorInfoContainer').html(partialView);
+                }
+            });
+        });
+    </script>
+}

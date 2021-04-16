@@ -55,6 +55,13 @@ namespace AllocationProration.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult AddInvestorInfoItem([Bind("InvestorInfos")] AllocationViewModel allocationViewModel)
+        {
+            allocationViewModel.InvestorInfos.Add(new InvestorInfo());
+            return PartialView("InvestorInfo", allocationViewModel);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
